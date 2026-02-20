@@ -3,388 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Pink Dream | For You</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>A World Made Only For Mantasha</title>
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #fff5f8 0%, #fff0f5 50%, #ffe4e1 100%);
-            --primary-pink: #ffc4d6;
-            --dark-rose: #d68c9e;
-            --ivory: #ffffff;
-            --rose-gold: #c79a9a;
-            --text-main: #6d5454;
-            --glass: rgba(255, 255, 255, 0.65);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.8);
-            --shadow: 0 8px 32px rgba(214, 140, 158, 0.15);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400;600&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; font-family: 'Playfair Display', serif; overflow-x: hidden; background: #000; scroll-behavior: smooth; }
 
-        body {
-            background: var(--bg-gradient);
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-main);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+        /* Global Particles */
+        #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .particle { position: absolute; bottom: -10px; background: radial-gradient(circle, rgba(255,255,255,0.6), transparent 70%); border-radius: 50%; opacity: 0; animation: rise linear infinite; }
+        @keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 0.5; } 80% { opacity: 0.3; } 100% { transform: translateY(-120vh) scale(0.5); opacity: 0; } }
 
-        /* Typography */
-        h1, h2, h3, .serif {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            color: var(--dark-rose);
-        }
+        /* THEMES */
+        .page { min-height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 4rem 2rem; position: relative; z-index: 2; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .theme-dark-rose { background: radial-gradient(circle at center, #3a0000, #1a0000, #050000); color: #FDFDFD; }
+        .theme-pink { background: linear-gradient(135deg, #ffd1dc, #ffc0cb, #ffb6c1); color: #8B0000; }
+        .theme-gold { background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e); color: #ffd700; }
+        .theme-red { background: linear-gradient(to bottom, #870000, #190a05); color: #fff; }
+        .theme-peach { background: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%); color: #5e2129; }
+        .theme-final { background: #050000; color: #FDFDFD; }
 
-        /* Glass Cards */
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        /* Theme Text Adjustments */
+        .theme-dark-rose h2, .theme-red h2, .theme-final h2 { color: #FDFDFD; }
+        .theme-dark-rose .highlight, .theme-final .highlight { color: #F4C2C2; font-family: 'Great Vibes', cursive; font-size: 2.5rem; }
+        .theme-pink h2 { color: #d6336c; font-family: 'Poppins', sans-serif; letter-spacing: 3px; }
+        .theme-gold h2 { color: #ffd700; text-shadow: 0 0 15px rgba(255,215,0,0.5); }
+        .theme-red h2 { color: #ffcccc; text-shadow: 0 0 10px #ff0000; }
+        .theme-peach h2 { color: #d6336c; }
 
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: var(--glass-border);
-            border-radius: 35px;
-            padding: 40px;
-            width: 100%;
-            max-width: 480px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transform: scale(0.95);
-            display: none;
-            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+        /* COMMON ELEMENTS */
+        .content-wrapper { max-width: 900px; width: 100%; transform: translateY(50px); opacity: 0; transition: all 1.2s ease-out; display: flex; flex-direction: column; align-items: center; z-index: 3;}
+        .content-wrapper.visible { transform: translateY(0); opacity: 1; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 5rem; margin-bottom: 1rem; line-height: 1.2; color: #F4C2C2; text-shadow: 0 0 20px rgba(244,194,194,0.5); }
+        h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+        p { font-size: 1.6rem; line-height: 2.2; letter-spacing: 1px; font-style: italic; margin-bottom: 1.2rem; }
+        .divider { font-family: 'Cinzel'; font-size: 1.5rem; letter-spacing: 5px; margin-bottom: 2rem; opacity: 0.7; }
 
-        .card.active {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-        }
+        /* Page 1 BG Flower */
+        .bg-flower { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120vw; height: 120vw; max-width: 800px; max-height: 800px; opacity: 0.08; z-index: 1; animation: rotateFlower 60s linear infinite; pointer-events: none; }
+        @keyframes rotateFlower { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* Buttons */
-        .btn {
-            background: white;
-            color: var(--dark-rose);
-            border: 1px solid white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(214, 140, 158, 0.2);
-        }
+        /* INTERACTIVE ELEMENTS */
+        /* Bouquet */
+        .cute-bouquet-container { position: relative; width: 100%; max-width: 400px; height: 350px; margin: 2rem auto; display: flex; align-items: center; justify-content: center; }
+        .center-bouquet { width: 200px; height: 200px; z-index: 5; animation: float 4s ease-in-out infinite; filter: drop-shadow(0 15px 25px rgba(214, 51, 108, 0.4)); }
+        .bubble { position: absolute; background: rgba(255, 255, 255, 0.95); color: #d6336c; padding: 10px 18px; border-radius: 25px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 600; box-shadow: 0 8px 20px rgba(214, 51, 108, 0.2); border: 2px solid #ffb6c1; animation: floatBubble 5s ease-in-out infinite; z-index: 6; }
+        .b1 { top: 0; left: -10%; animation-delay: 0s; } .b2 { top: 15%; right: -10%; animation-delay: 1s; } .b3 { bottom: 10%; left: 0; animation-delay: 2s; }
+        @keyframes floatBubble { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-10px) scale(1.02); } }
 
-        .btn:hover {
-            background: var(--primary-pink);
-            color: white;
-            transform: translateY(-2px);
-        }
+        /* Envelope */
+        .envelope-wrapper { position: relative; width: 300px; height: 200px; margin: 3rem auto; cursor: pointer; }
+        .envelope { position: absolute; width: 100%; height: 100%; background: rgba(100,0,0,0.8); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 3; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 15px;}
+        .flap { position: absolute; top: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 110px solid rgba(150,0,0,0.9); z-index: 5; transform-origin: top; transition: transform 0.6s; }
+        .letter { position: absolute; bottom: 5px; width: 92%; min-height: 200px; background: #fffdf8; border-radius: 8px; z-index: 2; transition: transform 0.6s; padding: 25px 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;}
+        .letter-text { font-family: 'Great Vibes', cursive; color: #5a0000; font-size: 1.5rem; line-height: 1.5; text-align: center;}
+        .envelope-wrapper:hover .flap { transform: rotateX(180deg); z-index: 1; } .envelope-wrapper:hover .letter { transform: translateY(-150px); z-index: 6; }
 
-        /* Floating Hearts Animation */
-        .bg-hearts {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-        .heart-flake {
-            position: absolute;
-            color: rgba(255, 196, 214, 0.3);
-            font-size: 20px;
-            animation: floatUp linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
+        /* Timeline */
+        .timeline { width: 100%; max-width: 400px; margin: 2rem auto; text-align: left; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 20px; }
+        .timeline-item { margin-bottom: 2rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -27px; top: 5px; width: 12px; height: 12px; background: currentColor; border-radius: 50%; }
+        .timeline-date { font-family: 'Cinzel'; font-size: 1.1rem; margin-bottom: 5px; opacity: 0.9; }
 
-        /* Specific Page Styles */
-        .comp-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .comp-card {
-            background: white;
-            padding: 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            transition: 0.3s;
-            cursor: default;
-        }
-        .comp-card:hover { transform: scale(1.05); background: var(--primary-pink); color: white; }
+        /* Music Player */
+        .music-player { width: 100%; max-width: 320px; padding: 15px 25px; border: 1px solid currentColor; border-radius: 40px; display: flex; align-items: center; justify-content: space-between; gap: 15px; font-family: 'Cinzel', serif; margin-top: 2rem; background: rgba(0,0,0,0.2); }
+        .play-btn { font-size: 1.8rem; } .track-line { flex-grow: 1; height: 3px; background: currentColor; opacity: 0.5; position: relative; } .time { font-size: 1.1rem; }
 
-        .wheel-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-        }
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid var(--primary-pink);
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .pointer {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 20px solid var(--dark-rose);
-            z-index: 10;
-        }
+        /* Gift */
+        .gift-container { position: relative; width: 120px; height: 120px; margin: 3rem auto; cursor: pointer; }
+        .gift-box { width: 100px; height: 80px; background: linear-gradient(135deg, #8B0000, #500000); position: absolute; bottom: 0; left: 10px; border-radius: 5px; display: flex; justify-content: center; border: 1px solid rgba(255,255,255,0.3); }
+        .gift-lid { width: 110px; height: 25px; background: linear-gradient(135deg, #a00000, #700000); position: absolute; top: 15px; left: 5px; border-radius: 3px; z-index: 4; transition: transform 0.6s ease, opacity 0.6s; display: flex; justify-content: center; border: 1px solid rgba(255,255,255,0.3);}
+        .gift-bow { position: absolute; top: -15px; font-size: 2rem; }
+        .gift-content { position: absolute; top: 0; left: -50px; width: 220px; opacity: 0; transition: all 0.6s; z-index: 3; text-align: center; }
+        .gift-ring { font-size: 3.5rem; margin-bottom: 10px; animation: float 3s infinite; } .gift-message { font-family: 'Great Vibes'; font-size: 2rem; }
+        .gift-container.open .gift-lid { transform: translateY(-40px) rotate(15deg); opacity: 0; } .gift-container.open .gift-content { transform: translateY(-110px); opacity: 1; }
 
-        .heart-btn {
-            font-size: 4rem;
-            color: var(--primary-pink);
-            cursor: pointer;
-            transition: 0.1s;
-        }
-        .heart-btn:active { transform: scale(0.8); }
+        /* Flip Cards */
+        .flip-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+        .flip-card { width: 250px; height: 150px; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer; border-radius: 15px; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 15px; padding: 1.5rem; border: 1px solid currentColor; }
+        .flip-card-front { background: rgba(0,0,0,0.2); font-family: 'Cinzel'; font-size: 1.3rem; } .flip-card-back { background: rgba(0,0,0,0.8); transform: rotateY(180deg); font-size: 1.2rem; }
 
-        .music-toggle {
-            position: fixed;
-            top: 20px; right: 20px;
-            background: white;
-            padding: 10px;
-            border-radius: 50%;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            z-index: 100;
-            color: var(--dark-rose);
-        }
+        /* Word by Word Animation */
+        #poem-container { font-family: 'Playfair Display', serif; font-size: 2rem; font-style: italic; line-height: 2; color: #F4C2C2; text-align: center; max-width: 800px; margin: 2rem auto; min-height: 150px; }
+        .poem-word { opacity: 0; display: inline-block; margin-right: 8px; transform: translateY(10px); }
+        .visible .poem-word { animation: revealWord 0.8s forwards ease-out; }
+        @keyframes revealWord { to { opacity: 1; transform: translateY(0); } }
 
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+
+        @media (max-width: 768px) { h1 { font-size: 4rem; } h2 { font-size: 2rem; } p { font-size: 1.3rem; } .bg-flower { width: 180vw; height: 180vw; } #poem-container { font-size: 1.5rem; } }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="https://ia800504.us.archive.org/33/items/ErikSatieGymnopedieNo1/ErikSatieGymnopedieNo1.mp3" type="audio/mp3">
-    </audio>
+    <div id="particle-container"></div>
 
-    <div class="bg-hearts" id="bg-hearts"></div>
-    <div class="music-toggle" onclick="toggleMusic()"><i class="fas fa-music"></i></div>
-
-    <div class="container">
-
-        <div class="card active" id="p1">
-            <i class="fas fa-heart" style="font-size: 2.5rem; color: var(--primary-pink); margin-bottom: 20px;"></i>
-            <h1 style="font-size: 2.5rem;">Hello, Darling.</h1>
-            <p style="margin-top: 15px; font-size: 1.1rem; line-height: 1.6;">
-                I built a quiet, pink world just for us.<br>
-                Take a deep breath. You are safe here.
-            </p>
-            <button class="btn" onclick="nextPage(2); startMusic()">Step into Love</button>
+    <section class="page theme-dark-rose" id="page1">
+        <svg class="bg-flower" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 10 C120 40, 160 20, 190 50 C160 70, 180 110, 150 140 C130 180, 90 190, 60 160 C30 140, 10 100, 30 70 C50 30, 80 10, 100 10 Z" fill="none" stroke="#F4C2C2" stroke-width="2"/>
+            <path d="M100 30 C115 50, 145 40, 160 60 C140 75, 155 105, 135 125 C120 155, 90 160, 70 140 C50 125, 35 95, 50 75 C65 45, 85 30, 100 30 Z" fill="none" stroke="#F4C2C2" stroke-width="1.5"/>
+            <circle cx="100" cy="90" r="20" fill="none" stroke="#F4C2C2" stroke-width="1"/>
+        </svg>
+        <div class="content-wrapper visible">
+            <h1>Welcome Mantasha</h1>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"To a world where every heartbeat quietly speaks your name."</p>
         </div>
+    </section>
 
-        <div class="card" id="p2">
-            <h2 class="serif">My Heart...</h2>
-            <div style="max-height: 200px; overflow-y: auto; margin: 20px 0; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.8;">
-                "I don't need the whole world to love me,<br>
-                I just need you.<br><br>
-                Your happiness is my favorite color.<br>
-                Your peace is my favorite place.<br>
-                Thank you for being my softest safe haven."
-            </div>
-            <button class="btn" onclick="nextPage(3)">See What I Love</button>
+    <section class="page theme-red" id="page2">
+        <div class="content-wrapper">
+            <h2>First Thought</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"The first time your name<br>quietly brushed against my mind,<br>something inside me<br>decided to stay forever."</p>
         </div>
+    </section>
 
-        <div class="card" id="p3">
-            <h2 class="serif">You Are...</h2>
-            <div class="comp-grid">
-                <div class="comp-card">So Gentle 🌸</div>
-                <div class="comp-card">My Peace ☁️</div>
-                <div class="comp-card">Adorably Cute 🎀</div>
-                <div class="comp-card">Pure Magic ✨</div>
-            </div>
-            <button class="btn" onclick="nextPage(4)">Open Daily Note</button>
-        </div>
-
-        <div class="card" id="p4">
-            <h2 class="serif">A Note For You</h2>
-            <div onclick="openEnvelope()" style="cursor: pointer; margin: 30px 0;">
-                <i id="env-icon" class="fas fa-envelope" style="font-size: 4rem; color: var(--primary-pink); transition: 0.5s;"></i>
-                <p id="env-text" style="margin-top: 15px; font-weight: 600;">Tap to Open</p>
-            </div>
-            <div id="next-btn-4" style="display: none;">
-                <button class="btn" onclick="nextPage(5)">Let's Play</button>
+    <section class="page theme-pink" id="page3">
+        <div class="content-wrapper">
+            <h2>When I Saw You</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"It wasn’t magic, yet everything around me<br>suddenly believed in it."</p>
+            <div class="cute-bouquet-container">
+                <div class="bubble b1">For my Cutie 💖</div>
+                <div class="bubble b2">You are my today 💕</div>
+                <div class="bubble b3">I love you ❤️</div>
+                <svg class="center-bouquet" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M95 160 L 90 190 M105 160 L 110 190" stroke="#2d5a27" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="100" cy="100" r="35" fill="#ff4d6d"/>
+                    <circle cx="70" cy="110" r="30" fill="#c9184a"/>
+                    <circle cx="130" cy="110" r="30" fill="#ff758f"/>
+                    <circle cx="100" cy="140" r="25" fill="#a01a58"/>
+                    <circle cx="60" cy="80" r="25" fill="#ff4d6d"/>
+                    <circle cx="140" cy="80" r="25" fill="#c9184a"/>
+                    <circle cx="100" cy="60" r="30" fill="#ff758f"/>
+                    <path d="M80 170 Q 100 190 120 170 Q 100 150 80 170 Z" fill="#ffb3c6"/>
+                </svg>
             </div>
         </div>
+    </section>
 
-        <div class="card" id="p5">
-            <h2 class="serif">Playtime 🎀</h2>
-            <p>I put some love into these little games.<br>Just for you to smile.</p>
-            <div style="font-size: 3rem; margin: 20px 0;">
-                🧸 🎮 🎲
-            </div>
-            <button class="btn" onclick="nextPage(6)">Spin the Wheel</button>
+    <section class="page theme-gold" id="page4">
+        <div class="content-wrapper">
+            <h2>Your Smile</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"Your smile does not ask permission,<br>it simply arrives<br>and my entire world<br>rearranges itself around it."</p>
         </div>
+    </section>
 
-        <div class="card" id="p6">
-            <h3 class="serif">What do you need today?</h3>
-            <div class="wheel-container" style="margin-top: 20px;">
-                <div class="pointer"></div>
-                <div class="wheel" id="wheel">
-                    <i class="fas fa-heart" style="font-size: 3rem; color: var(--dark-rose);"></i>
+    <section class="page theme-peach" id="page5">
+        <div class="content-wrapper">
+            <h2>Your Eyes</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"Your eyes —<br>two silent promises<br>that tomorrow<br>will always be worth waiting for."</p>
+            <div class="envelope-wrapper">
+                <div class="flap" style="border-top-color: rgba(139,0,0,0.9);"></div>
+                <div class="letter">
+                    <div class="letter-text">
+                        My Darling Mantasha,<br>
+                        You are my peace,<br>
+                        my joy, and my forever.
+                    </div>
+                </div>
+                <div class="envelope" style="background: rgba(100,0,0,0.8);">
+                    <span style="font-family: 'Cinzel'; color: #fff; font-size: 0.9rem; letter-spacing: 2px;">OPEN ME</span>
                 </div>
             </div>
-            <p id="spin-result" style="margin-top: 20px; font-weight: bold; min-height: 25px;"></p>
-            <button class="btn" onclick="spinWheel()">Spin</button>
-            <br>
-            <button class="btn" onclick="nextPage(7)" style="background: transparent; color: var(--text-main); border: none; box-shadow: none; font-size: 0.9rem;">Next Activity</button>
         </div>
+    </section>
 
-        <div class="card" id="p7">
-            <h2 class="serif">Soft Words</h2>
-            <div style="background: white; padding: 20px; border-radius: 20px; margin: 20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                <p class="serif" style="font-size: 1.4rem; font-style: italic;">
-                    "Like a flower<br>needs the sun,<br>I need you."
-                </p>
+    <section class="page theme-dark-rose" id="page6">
+        <div class="content-wrapper">
+            <h2>Your Voice</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"Even silence<br>sounds beautiful<br>when it carries<br>the memory of your voice."</p>
+            <div class="music-player">
+                <div class="play-btn">▶</div>
+                <div class="track-line"></div>
+                <div class="time">1:43</div>
             </div>
-            <button class="btn" onclick="nextPage(8)">Generate Love</button>
         </div>
+    </section>
 
-        <div class="card" id="p8">
-            <h2 class="serif">Instant Love</h2>
-            <div id="gen-box" style="margin: 30px 0; min-height: 50px;">
-                Tap the button...
+    <section class="page theme-red" id="page7">
+        <div class="content-wrapper">
+            <h2>My Favorite Place</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"My favorite place<br>is not a city<br>or a dream —<br>it is the moment<br>you say my name."</p>
+        </div>
+    </section>
+
+    <section class="page theme-gold" id="page8">
+        <div class="content-wrapper">
+            <h2>Missing You</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"Distance only teaches<br>how loudly a heart<br>can whisper your absence."</p>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-date">The Beginning</div><p style="font-size: 1.2rem; margin:0;">Two strangers met.</p></div>
+                <div class="timeline-item"><div class="timeline-date">The Connection</div><p style="font-size: 1.2rem; margin:0;">Late night talks.</p></div>
+                <div class="timeline-item"><div class="timeline-date">Forever</div><p style="font-size: 1.2rem; margin:0;">You became my home.</p></div>
             </div>
-            <button class="btn" onclick="genMessage()">Send Me Love ✨</button>
-            <br>
-            <button class="btn" onclick="nextPage(9)" style="background: transparent; color: var(--text-main); border: none; box-shadow: none; font-size: 0.9rem;">Continue</button>
         </div>
+    </section>
 
-        <div class="card" id="p9">
-            <h2 class="serif">Send Hearts</h2>
-            <p>Tap the heart as much as you love me!</p>
-            <div class="heart-btn" onclick="tapHeart()">❤️</div>
-            <p id="heart-count" style="margin-top: 15px; font-weight: bold;">Hearts sent: 0</p>
-            <button class="btn" onclick="nextPage(10)">Finish</button>
+    <section class="page theme-peach" id="page9">
+        <div class="content-wrapper">
+            <h2>Holding Hands</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"When our hands meet,<br>the world quietly<br>forgets<br>how to move."</p>
         </div>
+    </section>
 
-        <div class="card" id="p10">
-            <h1 class="serif" style="font-size: 3rem; color: var(--dark-rose);">Quietly.</h1>
-            <p style="margin: 20px 0; font-size: 1.2rem;">
-                Love doesn't shout.<br>
-                It stays.<br><br>
-                And I am staying.
-            </p>
-            <p style="font-size: 0.9rem; opacity: 0.7;">Forever yours.</p>
-            <button class="btn" onclick="nextPage(1)">Replay Dream</button>
+    <section class="page theme-pink" id="page10">
+        <div class="content-wrapper">
+            <h2>Laughing Together</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"Your laughter<br>is the only chaos<br>I ever want<br>in my peace."</p>
+            <div class="gift-container" onclick="this.classList.toggle('open')">
+                <div class="gift-box"></div>
+                <div class="gift-lid"><div class="gift-bow">🎀</div></div>
+                <div class="gift-content">
+                    <div class="gift-ring">💍</div>
+                    <div class="gift-message">A promise for my Cutie</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-    </div>
+    <section class="page theme-dark-rose" id="page11">
+        <div class="content-wrapper">
+            <h2>Late Night Thoughts</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"Nights become<br>softer<br>when they end<br>with you."</p>
+        </div>
+    </section>
+
+    <section class="page theme-red" id="page12">
+        <div class="content-wrapper">
+            <h2>My Promise</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"I promise<br>to stay<br>even when<br>staying becomes<br>difficult."</p>
+        </div>
+    </section>
+
+    <section class="page theme-gold" id="page13">
+        <div class="content-wrapper">
+            <h2>Forever Feeling</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"Forever<br>suddenly feels<br>shorter<br>with you beside me."</p>
+        </div>
+    </section>
+
+    <section class="page theme-peach" id="page14">
+        <div class="content-wrapper">
+            <h2>Dreams</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"I stopped<br>dreaming alone<br>the day<br>you arrived."</p>
+            <div class="flip-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Reason 1</div><div class="flip-card-back">Your magical eyes</div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Reason 2</div><div class="flip-card-back">Your caring heart</div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page theme-pink" id="page15">
+        <div class="content-wrapper">
+            <h2>Safe Place</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"Your arms —<br>my favorite<br>definition<br>of home."</p>
+        </div>
+    </section>
+
+    <section class="page theme-dark-rose" id="page16">
+        <div class="content-wrapper">
+            <h2>Time</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"Time moves slower<br>when<br>you are near."</p>
+        </div>
+    </section>
+
+    <section class="page theme-red" id="page17">
+        <div class="content-wrapper">
+            <h2>Every Day Love</h2>
+            <div class="divider">~ ♡ ~</div>
+            <p>"Loving you<br>is my<br>everyday<br>miracle."</p>
+        </div>
+    </section>
+
+    <section class="page theme-gold" id="page18">
+        <div class="content-wrapper">
+            <h2>Growing Together</h2>
+            <div class="divider">~ ✧ ~</div>
+            <p>"Let us grow<br>into<br>something<br>the world<br>cannot name."</p>
+        </div>
+    </section>
+
+    <section class="page theme-peach" id="page19">
+        <div class="content-wrapper">
+            <h2>Final Words</h2>
+            <div class="divider">✦ ✦ ✦</div>
+            <p>"If I had<br>only one life<br>I would still<br>choose you."</p>
+        </div>
+    </section>
+
+    <section class="page theme-final" id="page20">
+        <div class="content-wrapper" id="final-wrapper">
+            <span class="highlight">~ For My Darling Mantasha ~</span>
+            <div id="poem-container"></div>
+            <a href="#page1" style="display:inline-block; margin-top:2rem; color:#F4C2C2; text-decoration:none; font-family:'Cinzel'; border:1px solid #F4C2C2; padding:10px 30px; border-radius:30px; opacity:0; transition:2s;" id="final-btn">Forever Yours</a>
+        </div>
+    </section>
 
     <script>
-        // --- Navigation ---
-        function nextPage(id) {
-            document.querySelectorAll('.card').forEach(c => {
-                c.classList.remove('active');
-                setTimeout(() => c.style.display = 'none', 500);
+        // Background Floating Particles
+        const container = document.getElementById('particle-container');
+        for (let i = 0; i < 40; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = Math.random() * 4 + 2 + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = Math.random() * 10 + 15 + 's';
+            p.style.animationDelay = Math.random() * -20 + 's';
+            container.appendChild(p);
+        }
+
+        // Scroll Reveal Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger Word-by-Word Animation on Page 20
+                    if(entry.target.id === 'final-wrapper' && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        showPoemWordByWord();
+                    }
+                }
             });
-            setTimeout(() => {
-                const el = document.getElementById('p' + id);
-                el.style.display = 'block';
-                setTimeout(() => el.classList.add('active'), 50);
-            }, 500);
-        }
+        }, { threshold: 0.3 });
 
-        // --- Music Logic ---
-        const audio = document.getElementById('bg-music');
-        function startMusic() {
-            audio.volume = 0.5; // Soft volume
-            // Attempt to play
-            var promise = audio.play();
-            if (promise !== undefined) {
-                promise.then(_ => {
-                    console.log("Music started!");
-                }).catch(error => {
-                    console.log("Autoplay prevented. User interaction needed.");
-                });
-            }
-        }
-        function toggleMusic() {
-            if (audio.paused) audio.play(); else audio.pause();
-        }
+        document.querySelectorAll('.content-wrapper').forEach(el => observer.observe(el));
 
-        // --- Animations (Floating Hearts) ---
-        function createHearts() {
-            const container = document.getElementById('bg-hearts');
-            for(let i=0; i<20; i++) {
-                const h = document.createElement('div');
-                h.className = 'heart-flake';
-                h.innerHTML = '❤';
-                h.style.left = Math.random() * 100 + '%';
-                h.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                h.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(h);
-            }
-        }
-        createHearts();
-
-        // --- Page 4: Envelope ---
-        function openEnvelope() {
-            document.getElementById('env-icon').classList.replace('fa-envelope', 'fa-envelope-open-text');
-            document.getElementById('env-text').innerText = "You are the best thing that ever happened to me.";
-            document.getElementById('next-btn-4').style.display = 'block';
-        }
-
-        // --- Page 6: Spinner ---
-        function spinWheel() {
-            const wheel = document.getElementById('wheel');
-            const result = document.getElementById('spin-result');
-            // Random spin degree
-            const deg = Math.floor(Math.random() * 1000) + 1000;
-            wheel.style.transform = `rotate(${deg}deg)`;
-            result.innerText = "Spinning...";
+        // Word-by-Word Poetry Logic for Page 20
+        function showPoemWordByWord() {
+            const poemText = "This website is not a page, it is every heartbeat I could not say aloud.";
+            const poemContainer = document.getElementById('poem-container');
+            const words = poemText.split(' ');
             
+            words.forEach((word, index) => {
+                let span = document.createElement('span');
+                span.innerText = word;
+                span.className = 'poem-word';
+                span.style.animationDelay = (index * 0.3) + 's'; 
+                poemContainer.appendChild(span);
+                
+                let space = document.createTextNode(' ');
+                poemContainer.appendChild(space);
+            });
+
             setTimeout(() => {
-                const opts = ["A Hug 🤗", "A Kiss 💋", "Chocolate 🍫", "Cuddles 🧸", "A Date 🌹"];
-                result.innerText = "You won: " + opts[Math.floor(Math.random() * opts.length)];
-            }, 3000);
+                document.getElementById('final-btn').style.opacity = '1';
+            }, words.length * 300 + 1000);
         }
-
-        // --- Page 8: Generator ---
-        function genMessage() {
-            const msgs = ["You glow differently.", "I adore you.", "My favorite human.", "Cutie pie."];
-            document.getElementById('gen-box').innerText = msgs[Math.floor(Math.random() * msgs.length)];
-        }
-
-        // --- Page 9: Heart Tapper ---
-        let count = 0;
-        function tapHeart() {
-            count++;
-            document.getElementById('heart-count').innerText = "Hearts sent: " + count;
-        }
-
     </script>
+
 </body>
 </html>
