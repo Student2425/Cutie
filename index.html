@@ -2,546 +2,646 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You For Being In My Life ❤️</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Favourite Person 🌷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS Variables (Lovely Purple & White Theme) --- */
         :root {
-            --bg-color: #FFFFFF;
-            --main-color: #8A6BB0;       /* Luscious, lovely purple */
-            --main-gradient: linear-gradient(135deg, #9b7bc4, #7a5a9c); /* 3D effect for frosting */
-            --secondary-color: #F8F4FF;  
-            --text-color: #3A3A3A;       
-            --highlight-color: #FFD700;  /* Gold */
-            --shadow-color: rgba(138, 107, 176, 0.15);
+            --ivory: #FFFBF0;
+            --blush: #FFD1DC;
+            --lavender: #E6E6FA;
+            --blue: #D6EAF8;
+            --peach: #FFDAB9;
+            --yellow: #FFFACD;
+            --text-dark: #4A4A4A;
+            --text-light: #7A7A7A;
         }
 
-        /* --- Global Reset & Basics --- */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.8;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* --- Aesthetic Animated Background --- */
-        .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
+            background-color: var(--ivory);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 209, 220, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 218, 185, 0.2) 0%, transparent 30%);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
             height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-            background: linear-gradient(180deg, #FFFFFF 0%, #FAF7FF 100%);
+            width: 100vw;
+            overflow: hidden; /* Hide main scrollbar */
         }
 
-        .blob {
+        h1, h2, h3, .handwritten {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+        }
+
+        /* --- Pages & Transitions (FIXED FOR MOBILE SCROLLING) --- */
+        .page {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            animation: floatBlob 12s infinite alternate ease-in-out;
-        }
-
-        .blob-1 { width: 400px; height: 400px; background: #E8DDFF; top: -10%; left: -10%; }
-        .blob-2 { width: 500px; height: 500px; background: #FDE8FF; bottom: -15%; right: -10%; animation-duration: 15s; }
-        .blob-3 { width: 300px; height: 300px; background: #E6F0FF; top: 40%; left: 60%; animation-duration: 18s; }
-
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
-        }
-
-        /* --- Typography & Spacing --- */
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            color: var(--main-color);
-        }
-
-        .section-title {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.15rem;
-            max-width: 650px;
-            margin: 0 auto 4rem auto;
-            color: #777;
-            font-weight: 300;
-        }
-
-        section {
-            padding: 120px 20px;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            padding: 10vh 20px 80px 20px; /* Proper padding so content isn't cut off */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            overflow-y: auto; /* Allows scrolling inside the page */
+            -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            justify-content: flex-start; /* Fixes the top-cut-off issue */
+            text-align: center;
+        }
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
         }
 
-        /* --- Animations --- */
-        .fade-in {
+        /* Helper to center content nicely on big screens but scroll on small */
+        .content-wrapper {
+            margin: auto; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Doodles & Decorations --- */
+        .doodle {
+            position: absolute;
+            opacity: 0.7;
+            font-size: 1.5rem;
+            animation: float 4s ease-in-out infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* --- Buttons (FIXED TEXT/CIRCLE ISSUE) --- */
+        button.primary-btn {
+            background: white;
+            border: 2px solid var(--blush);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 2px 4px 10px rgba(255, 209, 220, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 180px; /* Prevents squishing into a circle */
+            text-align: center;
+            white-space: nowrap; /* Forces text to stay in one line */
+        }
+        button.primary-btn:hover, button.primary-btn:active {
+            background: var(--blush);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* --- Page Specifics --- */
+        .pssst { font-size: 1.5rem; color: var(--text-light); margin-bottom: 10px; }
+        .huge-text { font-size: 3rem; margin-bottom: 20px; color: #d68798; line-height: 1.2; }
+        
+        .highlight {
+            background: linear-gradient(120deg, var(--yellow) 0%, var(--yellow) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 80%;
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        /* Delayed Reveals */
+        .delayed-text p {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: opacity, transform;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            margin: 12px 0;
+            font-size: 1.2rem;
         }
-
-        .fade-in.visible {
+        .delayed-text p.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- Section 1: Welcome --- */
-        #home {
-            text-align: center;
+        /* Interactive Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
         }
-
-        #home h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            color: var(--main-color);
-        }
-
-        #home p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            color: #666;
-            font-weight: 300;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--main-color);
-            color: #fff;
-            padding: 15px 45px;
-            border-radius: 40px;
-            font-size: 1.1rem;
-            font-weight: 400;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 25px var(--shadow-color);
-        }
-
-        .btn:hover {
-            background-color: #fff;
-            color: var(--main-color);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(138, 107, 176, 0.25);
-        }
-
-        /* --- Section 2: CSS Assembling Cake --- */
-        .cake-wrapper {
+        .flip-card {
+            background: white;
+            border: 2px dashed var(--lavender);
+            border-radius: 12px;
+            padding: 20px 10px;
+            cursor: pointer;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.3s;
             position: relative;
-            margin: 6rem 0;
-            width: 300px;
-            height: 250px;
+            min-height: 100px;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: flex-end;
-            animation: cakeFloat 4s ease-in-out infinite 4s; 
         }
+        .flip-card:hover { transform: translateY(-3px) rotate(-1deg); }
+        .card-front { font-family: 'Caveat', cursive; font-size: 1.4rem; font-weight: bold; }
+        .card-back { display: none; font-size: 1rem; color: var(--text-light); }
+        .flip-card.flipped .card-front { display: none; }
+        .flip-card.flipped .card-back { display: block; animation: fadeIn 0.5s ease; }
 
-        .plate, .cake-base, .frosting-group, .candle, .flame, .piping {
-            opacity: 0;
+        /* Quiz */
+        .quiz-container { max-width: 400px; width: 100%; }
+        .quiz-q { display: none; }
+        .quiz-q.active { display: block; animation: fadeIn 0.5s ease; }
+        .quiz-btn {
+            display: block; width: 100%; margin: 10px 0; padding: 15px;
+            background: white; border: 1px solid var(--peach); border-radius: 8px;
+            cursor: pointer; font-family: 'Nunito'; transition: background 0.2s;
+            font-size: 1.1rem; color: var(--text-dark);
         }
+        .quiz-btn:hover, .quiz-btn:active { background: var(--peach); }
 
-        /* The Plate */
-        .plate {
-            position: absolute;
-            bottom: 0;
-            width: 340px;
-            height: 25px;
-            background: linear-gradient(to bottom, #ffffff, #e6e6e6);
-            border-radius: 50%;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            z-index: 1;
+        /* Memory Wall */
+        .memory-wall {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px;
         }
-
-        /* The Cake Base (Sponge) */
-        .cake-base {
-            position: absolute;
-            bottom: 12px;
-            width: 250px;
-            height: 130px;
-            background: linear-gradient(to right, #FFFDF9, #f2efe9, #FFFDF9);
-            border-radius: 10px;
-            box-shadow: inset -10px 0 20px rgba(0,0,0,0.03);
-            z-index: 2;
-        }
-
-        /* Bottom Piping */
-        .piping {
-            position: absolute;
-            bottom: 10px;
-            width: 260px;
-            height: 20px;
-            display: flex;
-            justify-content: space-around;
-            z-index: 4;
-            left: 20px;
-        }
-        .piping-dot {
-            width: 22px;
-            height: 22px;
-            background: var(--main-gradient);
-            border-radius: 50%;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15), inset 2px 2px 5px rgba(255,255,255,0.4);
-        }
-
-        /* Overcreamed Top Frosting */
-        .frosting-group {
-            position: absolute;
-            bottom: 110px; 
-            width: 260px;
-            height: 40px;
-            z-index: 3;
-            left: 20px;
-            filter: drop-shadow(0 8px 5px rgba(0,0,0,0.08));
-        }
-
-        .frosting-top {
-            width: 100%;
-            height: 45px;
-            background: var(--main-gradient);
-            border-radius: 15px 15px 20px 20px;
-            position: relative;
-            box-shadow: inset 0 5px 10px rgba(255,255,255,0.3);
-        }
-
-        /* Drips */
-        .drip {
-            position: absolute;
-            background: var(--main-gradient);
-            border-radius: 0 0 20px 20px;
-            box-shadow: inset -2px 0 5px rgba(0,0,0,0.1);
-        }
-        .drip-1 { width: 35px; height: 50px; left: 15px; top: 30px; }
-        .drip-2 { width: 45px; height: 85px; left: 65px; top: 30px; }
-        .drip-3 { width: 30px; height: 40px; left: 125px; top: 30px; }
-        .drip-4 { width: 55px; height: 75px; left: 165px; top: 30px; }
-        .drip-5 { width: 25px; height: 45px; left: 225px; top: 30px; }
-
-        /* Sprinkles */
-        .sprinkle {
-            position: absolute;
-            width: 6px;
-            height: 12px;
-            border-radius: 10px;
-            z-index: 5;
-        }
-        .sp-1 { background: #FFD700; top: 10px; left: 30px; transform: rotate(45deg); }
-        .sp-2 { background: #FFFFFF; top: 20px; left: 70px; transform: rotate(-30deg); }
-        .sp-3 { background: #FFD700; top: 12px; left: 120px; transform: rotate(15deg); }
-        .sp-4 { background: #FFFFFF; top: 25px; left: 170px; transform: rotate(60deg); }
-        .sp-5 { background: #FFD700; top: 8px; left: 210px; transform: rotate(-45deg); }
-        .sp-6 { background: #FFFFFF; top: 55px; left: 80px; transform: rotate(20deg); }
-        .sp-7 { background: #FFD700; top: 45px; left: 180px; transform: rotate(-10deg); }
-
-        /* Candle */
-        .candle {
-            position: absolute;
-            bottom: 145px;
-            left: 143px;
-            width: 14px;
-            height: 65px;
-            background: linear-gradient(to right, #f2f2f2, #ffffff, #e6e6e6);
-            border-radius: 4px;
-            z-index: 4;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-            /* Purple Stripes on Candle */
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(138, 107, 176, 0.2) 10px, rgba(138, 107, 176, 0.2) 20px);
-        }
-
-        /* Flame */
-        .flame {
-            position: absolute;
-            bottom: 215px;
-            left: 142px;
-            width: 16px;
-            height: 26px;
-            background: var(--highlight-color);
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.6);
-            z-index: 5;
-        }
-
-        /* Assembly Animations */
-        .cake-wrapper.assemble .plate { animation: slideUpPlate 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cake-wrapper.assemble .cake-base { animation: dropDownBase 0.8s 0.6s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cake-wrapper.assemble .piping { animation: fadeInPiping 0.5s 1.2s forwards ease-in; }
-        .cake-wrapper.assemble .frosting-group { animation: dropDownFrosting 0.8s 1.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cake-wrapper.assemble .candle { animation: dropDownCandle 0.6s 2.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cake-wrapper.assemble .flame { animation: popInFlame 0.4s 2.8s forwards ease-out, flicker 1.2s 3.2s infinite alternate ease-in-out; }
-
-        @keyframes slideUpPlate { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes dropDownBase { from { transform: translateY(-150px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeInPiping { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes dropDownFrosting { from { transform: translateY(-100px) scaleY(1.2); opacity: 0; } to { transform: translateY(0) scaleY(1); opacity: 1; } }
-        @keyframes dropDownCandle { from { transform: translateY(-80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes popInFlame { from { transform: scale(0) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-        @keyframes flicker { 0% { transform: scale(1) rotate(-2deg); opacity: 0.9; } 100% { transform: scale(1.1) rotate(2deg); opacity: 1; box-shadow: 0 0 25px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 140, 0, 0.8); } }
-        @keyframes cakeFloat { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
-
-        /* --- Section 3: My Journey --- */
-        #journey p {
-            max-width: 800px;
-            text-align: center;
-            font-size: 1.2rem;
-            color: #555;
-            font-weight: 300;
-            line-height: 2.2;
-        }
-
-        /* --- Section 4: Deep Thank You Letter --- */
-        #letter {
-            padding: 100px 20px;
-            width: 100%;
-        }
-
-        .letter-container {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 20px 50px rgba(138, 107, 176, 0.1);
-            border-radius: 20px;
-            max-width: 850px;
-            width: 100%;
-            padding: 60px 50px;
-            margin: 0 auto;
+        .polaroid {
+            background: white; padding: 10px 10px 25px 10px;
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            width: 130px;
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
             position: relative;
         }
-
-        .letter-container::before {
-            content: "“";
-            position: absolute;
-            top: 10px;
-            left: 30px;
-            font-size: 8rem;
-            font-family: 'Playfair Display', serif;
-            color: rgba(138, 107, 176, 0.1);
-            line-height: 1;
+        .polaroid:nth-child(even) { transform: rotate(4deg); }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg); z-index: 2; }
+        .tape {
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 15px; background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #ddd; border-radius: 2px;
         }
-
-        .letter-content {
-            position: relative;
-            z-index: 2;
-            font-size: 1.15rem;
-            color: #444;
-            line-height: 2.2;
+        .polaroid-img {
+            width: 100%; height: 90px; background: var(--blue);
+            display: flex; align-items: center; justify-content: center; font-size: 2rem;
         }
+        .polaroid-caption { font-family: 'Caveat', cursive; margin-top: 10px; font-size: 1.1rem; line-height: 1.2; }
 
-        .letter-content p {
-            margin-bottom: 25px;
-        }
+        /* Gift Box */
+        #gift-box { font-size: 5rem; cursor: pointer; transition: transform 0.2s; margin-bottom: 20px; }
+        #gift-box:hover { transform: scale(1.1) rotate(5deg); }
+        #gift-reveal { display: none; }
 
-        .letter-greeting {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--main-color);
-            margin-bottom: 20px;
-            font-style: italic;
-        }
+        /* Final Flowers */
+        .growing-flowers { position: fixed; font-size: 2rem; opacity: 0; pointer-events: none; z-index: -1; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .letter-signoff {
-            margin-top: 40px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--main-color);
-            font-style: italic;
-        }
+        /* Confetti Canvas */
+        #confetti { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
 
-        /* --- Section 5: Final Message --- */
-        #final {
-            text-align: center;
-        }
-
-        #final h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        #final p {
-            font-size: 1.8rem;
-            margin-bottom: 4rem;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #555;
-        }
-
-        .small-text {
-            font-size: 1rem !important;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-family: 'Poppins', sans-serif !important;
-            font-style: normal !important;
-            font-weight: 400;
-        }
-
-        /* --- Mobile Responsiveness --- */
-        @media (max-width: 768px) {
-            #home h1, #final h1 { font-size: 2.8rem; }
-            #home p, #final p { font-size: 1.1rem; }
-            .section-title { font-size: 2.4rem; }
-            section { padding: 80px 20px; min-height: auto; margin-bottom: 50px;}
-            
-            .cake-wrapper { transform: scale(0.85); margin: 3rem 0; }
-            
-            .letter-container { padding: 40px 25px; }
-            .letter-greeting { font-size: 1.5rem; }
-            .letter-content { font-size: 1.05rem; }
+        /* Mobile specific adjustments */
+        @media (max-width: 450px) {
+            .huge-text { font-size: 2.5rem; }
+            h2.handwritten { font-size: 2rem !important; }
+            .card-grid { gap: 10px; }
+            .flip-card { min-height: 90px; padding: 10px; }
+            .polaroid { width: 120px; }
+            .delayed-text p { font-size: 1.1rem; }
+            .quiz-btn { padding: 12px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+    <!-- Canvas for effects -->
+    <canvas id="confetti"></canvas>
 
-    <section id="home">
-        <div class="fade-in">
-            <h1>Thank You For Being In My Life ❤️</h1>
-            <p>Today is my birthday, and this day is special because of you.</p>
-            <a href="#celebrate" class="btn">Enter ✨</a>
+    <!-- PAGE 1: HEY, YOU -->
+    <section id="page-1" class="page active">
+        <div class="content-wrapper">
+            <span class="doodle" style="top: 10%; left: 10%;">✨</span>
+            <span class="doodle" style="bottom: 20%; right: 15%;">🌸</span>
+            <div class="handwritten pssst">pssst...</div>
+            <div class="delayed-text" id="p1-text">
+                <p><h1 class="huge-text">HEY, YOU. 👀</h1></p>
+                <p style="font-size: 1.2rem; margin: 15px 0;">Yes, you.</p>
+                <p class="handwritten" style="font-size: 2.2rem; color: #d68798;">My favourite headache. 🌷</p>
+                <p style="margin-top: 30px;">I made you something.</p>
+                <p style="font-size: 0.95rem; color: var(--text-light);">Because apparently one normal Friendship Day wish wasn't enough.</p>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-2')" style="opacity: 0; animation: fadeIn 1s forwards 3s;">Okay, show me &rarr;</button>
         </div>
     </section>
 
-    <section id="celebrate">
-        <div class="fade-in">
-            <h2 class="section-title">Let's Celebrate My Birthday 🎂</h2>
+    <!-- PAGE 2: MY PERSON -->
+    <section id="page-2" class="page">
+        <div class="content-wrapper">
+            <span class="doodle" style="top: 15%; right: 10%;">🎀</span>
+            <span class="doodle" style="bottom: 10%; left: 10%;">💌</span>
+            <h1 class="huge-text">Happy Friendship Day 🌷</h1>
+            <h2 class="handwritten" style="font-size: 2.2rem; margin-bottom: 20px;">To my favourite person to annoy.</h2>
+            <div class="delayed-text" id="p2-text">
+                <p>You're technically my best friend…</p>
+                <p>…but let's be honest.</p>
+                <p class="highlight" style="font-size: 1.6rem; margin: 25px 0;">You get VIP treatment. ✨</p>
+                <p class="handwritten" style="font-size: 1.5rem;">Don't get too proud though. 😌</p>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-3')">Continue &rarr;</button>
         </div>
-        
-        <div class="cake-wrapper" id="the-cake">
-            <div class="plate"></div>
+    </section>
+
+    <!-- PAGE 3: WHY YOU MATTER -->
+    <section id="page-3" class="page">
+        <div class="content-wrapper">
+            <h2 class="handwritten" style="font-size: 2.5rem; margin-bottom: 25px;">Okay… serious for a minute.</h2>
+            <div class="delayed-text" id="p3-text" style="text-align: left; margin-bottom: 20px;">
+                <p>🤍 You're someone I can talk to.</p>
+                <p>🤍 You're someone I can laugh with.</p>
+                <p>🤍 You're someone I can trust.</p>
+                <p>🤍 You're someone I genuinely care about.</p>
+                <p style="margin-top: 25px; text-align: center;">And yeah…</p>
+                <p style="font-size: 1.8rem; font-weight: bold; text-align: center; color: #d68798;">You're important to me. A lot.</p>
+                <p class="handwritten" style="text-align: center; font-size: 1.2rem; color: var(--text-light); margin-top: 15px;">(Don't let this information get to your head. 😂)</p>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-4')">Next &rarr;</button>
+        </div>
+    </section>
+
+    <!-- PAGE 4: THINGS I LIKE ABOUT YOU -->
+    <section id="page-4" class="page">
+        <div class="content-wrapper">
+            <h2 class="handwritten" style="font-size: 2.5rem;">Things I Like About You 🌸</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-light);">(Tap to reveal)</p>
             
-            <div class="cake-base"></div>
+            <div class="card-grid">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Your smile ♡</div>
+                    <div class="card-back">Instant mood upgrade.</div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Your laugh</div>
+                    <div class="card-back">Annoyingly contagious.</div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Your personality</div>
+                    <div class="card-back">Chaotic. Weird. Perfectly you.</div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Your caring side</div>
+                    <div class="card-back">Don't think I don't notice.</div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Random messages</div>
+                    <div class="card-back">Somehow they always make my day better.</div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-front">Just you.</div>
+                    <div class="card-back">No explanation needed.</div>
+                </div>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-5')">Move On &rarr;</button>
+        </div>
+    </section>
+
+    <!-- PAGE 5: POSSESSIVE DISCLAIMER -->
+    <section id="page-5" class="page">
+        <div class="content-wrapper">
+            <h2 style="font-size: 2.2rem; color: #e74c3c; font-weight: 800; margin-bottom: 20px;">IMPORTANT NOTICE 🚨</h2>
+            <div class="delayed-text" id="p5-text" style="text-align: left;">
+                <p style="text-align: center;">You are my best friend.</p>
+                <p style="text-align: center;">You are also…</p>
+                <p style="font-size: 2rem; font-weight: 800; color: #d68798; margin: 25px 0; text-align: center;">NOT ALLOWED TO DISAPPEAR.</p>
+                <p>📌 Not replying for 7 hours is considered suspicious.</p>
+                <p>📌 Replacing me with another bestie requires written permission.</p>
+                <p>📌 Being unnecessarily adorable is also suspicious.</p>
+                <p style="margin-top: 25px; font-weight: bold; text-align: center;">Thank you for cooperating. 👮‍♀️</p>
+                <p class="handwritten" style="margin-top: 30px; font-size: 1.5rem; text-align: center; color: var(--text-light);">I'm not possessive... I'm just professionally attached. 😌</p>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-6')">Understood &rarr;</button>
+        </div>
+    </section>
+
+    <!-- PAGE 6: BESTIE TEST -->
+    <section id="page-6" class="page">
+        <div class="content-wrapper">
+            <h2 class="handwritten" style="font-size: 2.2rem; margin-bottom: 20px;">How well do you know your favourite idiot? 🎮</h2>
             
-            <div class="piping">
-                <div class="piping-dot"></div><div class="piping-dot"></div><div class="piping-dot"></div>
-                <div class="piping-dot"></div><div class="piping-dot"></div><div class="piping-dot"></div>
-                <div class="piping-dot"></div><div class="piping-dot"></div><div class="piping-dot"></div>
-                <div class="piping-dot"></div><div class="piping-dot"></div><div class="piping-dot"></div>
+            <div class="quiz-container">
+                <div class="quiz-q active" id="q1">
+                    <p>1. Who is more dramatic?</p>
+                    <button class="quiz-btn" onclick="nextQuiz('q2')">Me</button>
+                    <button class="quiz-btn" onclick="nextQuiz('q2')">You</button>
+                </div>
+                <div class="quiz-q" id="q2">
+                    <p>2. Who gets jealous when the other disappears?</p>
+                    <button class="quiz-btn" onclick="nextQuiz('q3')">Me</button>
+                    <button class="quiz-btn" onclick="nextQuiz('q3')">You</button>
+                </div>
+                <div class="quiz-q" id="q3">
+                    <p>3. Who is more likely to randomly text "listen..."?</p>
+                    <button class="quiz-btn" onclick="nextQuiz('q4')">Me</button>
+                    <button class="quiz-btn" onclick="nextQuiz('q4')">You</button>
+                </div>
+                <div class="quiz-q" id="q4">
+                    <p>4. Who apologizes first?</p>
+                    <button class="quiz-btn" onclick="nextQuiz('q5')">Me</button>
+                    <button class="quiz-btn" onclick="nextQuiz('q5')">You</button>
+                </div>
+                <div class="quiz-q" id="q5">
+                    <p>5. Who would survive longer without talking?</p>
+                    <button class="quiz-btn" onclick="nextQuiz('q6')">Me</button>
+                    <button class="quiz-btn" onclick="nextQuiz('q6')">You</button>
+                </div>
+                <div class="quiz-q" id="q6">
+                    <p style="font-weight: bold; font-size: 1.2rem;">6. Who secretly cares more?</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 15px; color: var(--text-light);">(Final Question: Who is luckier to have the other?)</p>
+                    <button class="quiz-btn" onclick="finishQuiz()">A) Me</button>
+                    <button class="quiz-btn" onclick="finishQuiz()">B) You</button>
+                    <button class="quiz-btn" onclick="finishQuiz()">C) Obviously both.</button>
+                </div>
+                
+                <div id="quiz-result" style="display: none;">
+                    <h3 class="highlight" style="font-size: 1.8rem; margin-bottom: 15px;">Correct answer: BOTH.</h3>
+                    <p class="handwritten" style="font-size: 1.8rem; color: #d68798;">Nice try though. 😌💗</p>
+                    <button class="primary-btn" onclick="nextPage('page-7')">Next &rarr;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 7: OUR LITTLE THINGS -->
+    <section id="page-7" class="page">
+        <div class="content-wrapper">
+            <h2 class="handwritten" style="font-size: 2.8rem;">Our Little Things 📸</h2>
+            <div class="memory-wall">
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <div class="polaroid-img">💭</div>
+                    <div class="polaroid-caption">Random<br>convos</div>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <div class="polaroid-img">🤡</div>
+                    <div class="polaroid-caption">Inside<br>jokes</div>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <div class="polaroid-img">😤</div>
+                    <div class="polaroid-caption">Stupid<br>arguments</div>
+                </div>
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <div class="polaroid-img">📞</div>
+                    <div class="polaroid-caption">Unexpected<br>calls</div>
+                </div>
+            </div>
+            <p class="handwritten" style="margin-top: 25px; font-size: 1.4rem;">Laughing at absolutely nothing...<br>Those tiny moments nobody else understands.</p>
+            <button class="primary-btn" onclick="nextPage('page-8')">Next &rarr;</button>
+        </div>
+    </section>
+
+    <!-- PAGE 8: NO JOKES NOW -->
+    <section id="page-8" class="page">
+        <div class="content-wrapper">
+            <div class="delayed-text handwritten" id="p8-text" style="font-size: 1.6rem; text-align: left; max-width: 90%; color: #5a5a5a; line-height: 1.4;">
+                <p>Okay...</p>
+                <p>No jokes for a second.</p>
+                <p>Thank you.</p>
+                <p>For being there.</p>
+                <p>For listening to my nonsense.</p>
+                <p>For making ordinary days fun.</p>
+                <p>For being someone I can count on.</p>
+                <p>I might tease you constantly...</p>
+                <p>But underneath all that nonsense...</p>
+                <p style="color: #d68798; font-weight: bold; font-size: 1.8rem; margin: 20px 0;">You genuinely mean a lot to me.</p>
+                <p style="font-family: 'Nunito', sans-serif; font-size: 1rem; margin-top: 20px; text-align: center; color: var(--text-dark);">Whatever happens, I hope you always know that I'll be rooting for you. You deserve to be happy, loved, appreciated and surrounded by people who genuinely care about you.</p>
+                <p style="font-size: 1.3rem; text-align: center; margin-top: 25px;">And unfortunately for you...</p>
+                <p style="font-size: 1.8rem; text-align: center; color: #d68798;">I'm one of those people. ♡</p>
+            </div>
+            <button class="primary-btn" onclick="nextPage('page-9')">One more thing &rarr;</button>
+        </div>
+    </section>
+
+    <!-- PAGE 9: ONE LAST THING -->
+    <section id="page-9" class="page">
+        <div class="content-wrapper">
+            <div id="gift-intro">
+                <h2 class="handwritten" style="font-size: 2.5rem; margin-bottom: 30px;">Okay... Last surprise.</h2>
+                <div id="gift-box" onclick="openGift()">🎁</div>
+                <p style="font-size: 0.9rem; color: var(--text-light);">(Tap to open)</p>
             </div>
 
-            <div class="frosting-group">
-                <div class="frosting-top">
-                    <div class="sprinkle sp-1"></div>
-                    <div class="sprinkle sp-2"></div>
-                    <div class="sprinkle sp-3"></div>
-                    <div class="sprinkle sp-4"></div>
-                    <div class="sprinkle sp-5"></div>
+            <div class="delayed-text" id="gift-reveal">
+                <h2 class="huge-text">You're stuck with me.</h2>
+                <p>Sorry.</p>
+                <p class="handwritten" style="font-size: 1.6rem; margin-bottom: 20px;">Actually… not sorry. 😌</p>
+                <div style="margin: 20px 0; font-size: 1.1rem; line-height: 1.8;">
+                    <p>Through the random conversations.</p>
+                    <p>Through the chaos.</p>
+                    <p>Through the stupid jokes.</p>
+                    <p>Through the good days.</p>
+                    <p>And the not-so-good ones.</p>
                 </div>
-                <div class="drip drip-1"></div>
-                <div class="drip drip-2"></div>
-                <div class="drip drip-3">
-                    <div class="sprinkle sp-6"></div>
-                </div>
-                <div class="drip drip-4">
-                    <div class="sprinkle sp-7"></div>
-                </div>
-                <div class="drip drip-5"></div>
-            </div>
-            
-            <div class="candle"></div>
-            <div class="flame"></div>
-        </div>
-
-        <div class="fade-in">
-            <p class="section-subtitle">This special day is beautiful because of you.</p>
-        </div>
-    </section>
-
-    <section id="journey">
-        <div class="fade-in">
-            <h2 class="section-title">My Journey</h2>
-            <p>Life was not always easy, but some people made it beautiful. Some people stayed with me and supported me. Some people believed in me. This website is a thank you to those special people.</p>
-        </div>
-    </section>
-
-    <section id="letter">
-        <div class="fade-in">
-            <h2 class="section-title">A Letter To You 💌</h2>
-        </div>
-        
-        <div class="letter-container fade-in">
-            <div class="letter-content">
-                <div class="letter-greeting">Dearest Mantasha,</div>
-                
-                <p>As I celebrate my birthday today, I can't help but realize that the greatest gift I have isn't something wrapped in a box—it's you. Before you came into my life, things were ordinary, but you brought a light that made everything so incredibly beautiful.</p>
-                
-                <p>Thank you for standing by my side through the highs and the lows. Thank you for believing in me even when I struggled to believe in myself. Every moment with you is a memory I treasure, and every smile you give me makes my world a better place.</p>
-                
-                <p>You are my darling, my confidante, and my biggest source of happiness. I wanted this day to be about gratitude, about us, and about the love that makes life worth living. I am so lucky to have you.</p>
-                
-                <div class="letter-signoff">
-                    With all my heart,<br>
-                    Yours truly
-                </div>
+                <h3 class="highlight" style="font-size: 2.2rem; margin-top: 20px;">I'm here.</h3>
+                <button class="primary-btn" onclick="nextPage('page-10')">Finish 🌷</button>
             </div>
         </div>
     </section>
 
-    <section id="final">
-        <div class="fade-in">
-            <h1>Thank You For Everything ❤️</h1>
-            <p>My life is better because of you.</p>
-            <p class="small-text">Made with Love</p>
+    <!-- PAGE 10: FINAL SCENE -->
+    <section id="page-10" class="page">
+        <div class="content-wrapper">
+            <span class="growing-flowers" style="top: 5%; left: 5%;">🌸</span>
+            <span class="growing-flowers" style="top: 15%; right: 10%;">🌷</span>
+            <span class="growing-flowers" style="bottom: 25%; left: 10%;">✨</span>
+            <span class="growing-flowers" style="bottom: 5%; right: 5%;">🌼</span>
+
+            <div class="delayed-text" id="p10-text">
+                <p class="handwritten" style="font-size: 1.6rem;">Some people become memories…</p>
+                <p class="handwritten" style="font-size: 1.6rem;">Some become stories…</p>
+                <p class="handwritten" style="font-size: 1.6rem;">And some…</p>
+                <p class="handwritten" style="font-size: 2rem; margin-bottom: 30px; color: #d68798;">…just become part of your life.</p>
+                
+                <p style="margin-bottom: 25px; font-size: 1.1rem;">I'm really glad you're one of those people.</p>
+                
+                <h1 class="huge-text" style="font-size: 2.8rem; line-height: 1.2;">Happy Friendship Day, Bestie. 💗</h1>
+                
+                <div style="margin: 25px 0; font-size: 1.1rem; line-height: 1.6;">
+                    <p>Stay weird.</p>
+                    <p>Stay happy.</p>
+                    <p>Keep smiling.</p>
+                    <p>And please…</p>
+                </div>
+                
+                <p style="font-size: 1.8rem; font-weight: 800; color: #d68798; margin: 20px 0;">Don't replace me. Thanks. 😤♡</p>
+                <p class="handwritten" style="color: var(--text-light); font-size: 1.3rem;">Your favourite annoying person.</p>
+            </div>
+
+            <button class="primary-btn" onclick="location.reload()" style="margin-top: 40px; background: none; border: none; box-shadow: none; text-decoration: underline; color: var(--text-light); font-size: 1rem;">Replay our little story ↻</button>
         </div>
     </section>
 
     <script>
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2
+        function triggerDelayedText(pageId) {
+            const container = document.querySelector(`#${pageId} .delayed-text`);
+            if (container) {
+                const paragraphs = container.querySelectorAll('p, h1, h2, h3');
+                paragraphs.forEach((p, index) => {
+                    p.classList.remove('visible');
+                    setTimeout(() => {
+                        p.classList.add('visible');
+                        // Scroll to bottom gently if content is revealing off-screen
+                        const page = document.getElementById(pageId);
+                        if (page.scrollHeight > page.clientHeight) {
+                            page.scrollTo({ top: page.scrollHeight, behavior: 'smooth' });
+                        }
+                    }, 800 * (index + 1));
+                });
+            }
+
+            if (pageId === 'page-10') {
+                const flowers = document.querySelectorAll('.growing-flowers');
+                flowers.forEach((f, index) => {
+                    setTimeout(() => {
+                        f.style.transition = "all 1.5s ease";
+                        f.style.opacity = "0.8";
+                        f.style.transform = "scale(1.2) rotate(15deg)";
+                    }, 500 * index);
+                });
+                fireConfetti();
+            }
+        }
+
+        function nextPage(nextId) {
+            const activePage = document.querySelector('.page.active');
+            activePage.classList.remove('active');
+            
+            const nextPageEl = document.getElementById(nextId);
+            setTimeout(() => {
+                nextPageEl.classList.add('active');
+                nextPageEl.scrollTop = 0; // Reset scroll position for the new page
+                triggerDelayedText(nextId);
+            }, 800);
+        }
+
+        window.onload = () => {
+            triggerDelayedText('page-1');
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.classList.contains('fade-in')) {
-                        entry.target.classList.add('visible');
-                    }
-                    if (entry.target.id === 'the-cake') {
-                        entry.target.classList.add('assemble');
-                    }
-                    observer.unobserve(entry.target);
-                }
+        function nextQuiz(nextQId) {
+            const activeQ = document.querySelector('.quiz-q.active');
+            activeQ.classList.remove('active');
+            document.getElementById(nextQId).classList.add('active');
+        }
+
+        function finishQuiz() {
+            document.querySelector('.quiz-q.active').classList.remove('active');
+            const result = document.getElementById('quiz-result');
+            result.style.display = 'block';
+            result.style.animation = 'fadeIn 1s ease';
+            fireConfetti();
+        }
+
+        function openGift() {
+            document.getElementById('gift-intro').style.display = 'none';
+            const reveal = document.getElementById('gift-reveal');
+            reveal.style.display = 'block';
+            triggerDelayedText('page-9');
+            
+            for(let i=0; i<12; i++){
+                createFloatingEmoji(['💖', '✨', '🌸', '🎀'][Math.floor(Math.random()*4)]);
+            }
+        }
+
+        function createFloatingEmoji(emojiStr) {
+            const el = document.createElement('div');
+            el.innerText = emojiStr;
+            el.style.position = 'fixed';
+            el.style.left = Math.random() * 90 + 'vw';
+            el.style.top = '60vh';
+            el.style.fontSize = '2rem';
+            el.style.zIndex = 999;
+            el.style.transition = 'all 2s ease-out';
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.style.transform = `translateY(-50vh) scale(1.5) rotate(${Math.random()*90}deg)`;
+                el.style.opacity = '0';
+            }, 50);
+
+            setTimeout(() => el.remove(), 2000);
+        }
+
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const colors = ['#FFD1DC', '#E6E6FA', '#FFFACD', '#D6EAF8'];
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        function fireConfetti() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    r: Math.random() * 6 + 2,
+                    dx: Math.random() * 10 - 5,
+                    dy: Math.random() * -10 - 5,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+            if(particles.length > 0 && !window.confettiAnimating) {
+                window.confettiAnimating = true;
+                animateConfetti();
+            }
+        }
+
+        function animateConfetti() {
+            if(particles.length === 0) {
+                window.confettiAnimating = false;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+            requestAnimationFrame(animateConfetti);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.dy += 0.2; 
+                p.x += p.dx;
+                p.y += p.dy;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+                if (p.y > canvas.height) particles.splice(index, 1);
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        observer.observe(document.getElementById('the-cake'));
+        }
     </script>
-
 </body>
 </html>
